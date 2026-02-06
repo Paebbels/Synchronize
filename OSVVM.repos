@@ -6,6 +6,7 @@ OSVVM/OSVVM-Common=OSVVM-Common:main,dev
 #OSVVM/AvalonST=OSVVM-AvalonST:main
 OSVVM/AXI4=OSVVM-AXI4:main,dev
 OSVVM/CoSim=OSVVM-CoSim:main,dev
+OSVVM/CoSimPCIe=OSVVM-CoSimPCIe:main,dev
 OSVVM/DpRam=OSVVM-DPRAM:main,dev
 OSVVM/Ethernet=OSVVM-Ethernet:main
 OSVVM/UART=OSVVM-UART:main,dev
