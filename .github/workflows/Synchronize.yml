@@ -20,6 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+
 name: Synchronize forked repositories
 
 on:
@@ -36,64 +37,7 @@ jobs:
       - name: ⏬ Checkout
         uses: actions/checkout@v6
 
-      - name: ☑ Check GitHub API
-        run: |
-          printf "which gh=%s\n"      "$(which gh)"
-          printf "gh --version: %s\n" "$(gh --version)"
-          gh help
-
       - name: 🔄 Synchronize Repositories
-        run: |
-          set +e
-
-          printf "Copyright (c) 2024-2026 Patrick Lehmann\n"
-          printf "  License: MIT License\n"
-          printf "    Copy:  https://github.com/Paebbels/SynchronizeForks/blob/main/LICENSE.md\n"
-          printf "  Source : https://github.com/Paebbels/SynchronizeForks\n"
-          printf "\n"
-          printf "See also: %s\n" "https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork"
-          export GH_TOKEN=${{ secrets.GH_TOKEN }}
-
-          targetOrganisation=Paebbels
-          errorCount=0
-
-          while IFS=$'\r\n' read -r organisation; do
-            if [[ "${organisation:0:1}" == "#" ]]; then
-              printf "🚫 %s\n" "${organisation}"
-              continue
-            else
-              printf "🏭 %s\n" "${organisation}"
-            fi
-
-            while IFS=$'\r\n' read -r line; do
-              parent=${line%=*}
-              fork=${line#*=}
-              repo=${fork%:*}
-              branches=${fork#*:}
-              branches=(${branches//,/ })
-
-              if [[ "${line:0:1}" == "#" ]]; then
-                printf "  🚫 %s ⇒ %s\n" "${parent}" "${repo}"
-                continue
-              else
-                printf "  📂 %s ⇒ %s\n" "${parent}" "${repo}"
-              fi
-
-              for branch in "${branches[@]}"; do
-                syncCommand="gh repo sync ${targetOrganisation}/${repo} -b ${branch}"
-                messages=$($syncCommand 2>&1)
-                if [[ $? -eq 0 ]]; then
-                  printf "    ✅ %s\n" "${syncCommand}"
-                else
-                  printf "    ❌ %s\n" "${syncCommand}"
-                  printf "%s\n" "$(sed 's/^/    ↪ /g' <<< "${messages}")"
-                  printf "::error title=%s::%s\n" "Synchronize ${targetOrganisation}/${repo}" "${messages}"
-                  errorCount=$((errorCount + 1))
-                fi
-              done
-            done < <(cat "${organisation}.repos")
-          done < <(cat ".ALL.repos")
-
-          if [[ $errorCount -gt 0 ]]; then
-            exit 1
-          fi
+        uses: pyTooling/SynchronizeForks@main
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
