@@ -38,6 +38,6 @@ jobs:
         uses: actions/checkout@v6
 
       - name: 🔄 Synchronize Repositories
-        uses: pyTooling/SynchronizeForks@main
+        uses: pyTooling/SynchronizeForks@v1
         with:
           github-token: ${{ secrets.GH_TOKEN }}

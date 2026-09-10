@@ -29,12 +29,13 @@ ends with a summary.)*
            uses: actions/checkout@v6
 
          - name: 🔄 Synchronize Repositories
-           uses: pyTooling/SynchronizeForks@main
+           uses: pyTooling/SynchronizeForks@v1
            with:
              github-token: ${{ secrets.GH_TOKEN }}
    ```
    `GH_TOKEN` is a repository secret holding a token with write access to the contents of every listed fork. A
-   workflow's automatic `GITHUB_TOKEN` isn't sufficient.
+   workflow's automatic `GITHUB_TOKEN` isn't sufficient. `@v1` is the action's major-version branch, moved to each
+   release.
 3. Add an `.ALL.repos` file and the matching `*.repos` files.
 4. Push the commit and check the Action for success.
 
