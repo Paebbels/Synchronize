@@ -65,12 +65,13 @@ _Others
 
 Each organisation has a matching `*.repos` file contains one repository per line. Alternatively, a comment starting
 with `#`. A repository line has the following format:  
-`<upstream>=<localRepository>:<branches>`
+`<upstream>=<localRepository>:<branches>[:<tagPatterns>]`
 
 * `<upstream>` is formatted like `<organisation>/<repository>` or `<privateAccount>/<repository>`.
 * `<localRepository>` is formatted like `<repository>`.  
   An account or organisation is not required, because it's inferred from the repository this script runs in.
 * `<branches>` is a comma separated list of branch names like `<branch>,<branch>,<branch>`.
+* `<tagPatterns>` is optional: a comma separated list of tag names or regular expressions.
 	
 **Example:**
 ```
