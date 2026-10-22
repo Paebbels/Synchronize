@@ -3,7 +3,7 @@ updates:
   # Maintain GitHub Action runners
   - package-ecosystem: "github-actions"
     directory: "/"
-    target-branch: dev
+    target-branch: main
     commit-message:
       prefix: "[Dependabot]"
     labels:
